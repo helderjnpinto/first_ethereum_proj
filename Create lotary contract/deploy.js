@@ -25,6 +25,8 @@ const deploy = async () => {
     const accounts = await web3.eth.getAccounts();
     console.log('Get first account ', accounts[0]);
 
+    console.log('\t ABI:', interface);
+
     const res = await new web3.eth.Contract(JSON.parse(interface))
         .deploy({
             data: bytecode,
@@ -35,8 +37,8 @@ const deploy = async () => {
         });
 
     console.log('Result of deploy address of contract: ', res.options.address);
-    console.log(`Access this page https://rinkeby.etherscan.io/${res.options.address}`);
-    console.log(`Test with this address on remix`);
+    console.log(`\t Access this page https://rinkeby.etherscan.io/address/${res.options.address}`);
+    console.log(`\t Test with this address on remix`);
 
     
 };
