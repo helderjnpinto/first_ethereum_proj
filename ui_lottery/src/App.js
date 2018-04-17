@@ -3,7 +3,6 @@ import './App.css';
 import web3 from './web3';
 
 import lottery from './lottery_abi';
-
 class App extends Component {
   state = { 
       manager: '',
@@ -11,6 +10,8 @@ class App extends Component {
       balance: '',
       value: '',
       message: '',
+      accounts: [],
+      selectedAccount: ''
   };
 
   constructor(props) {
@@ -21,11 +22,14 @@ class App extends Component {
     const manager = await lottery.methods.manager().call();
     const players = await lottery.methods.getPlayers().call();
     const balance = await web3.eth.getBalance(lottery.options.address); // address of contract and return an big number
-    this.setState({ manager, players, balance });
+    const accounts = await web3.eth.getAccounts();
+    console.log('​App -> asynccomponentDidMount -> accounts', await web3.eth);
+  
+    this.setState({ manager, players, balance, accounts });
   }
 
   render() {
-    console.log('Web3: ', web3.version);
+   
     return (
       <div className="App">
          <h2> Lottery </h2>
@@ -40,6 +44,9 @@ class App extends Component {
             <h4>Try the lottery</h4>
             <div>
             <label> Amount of ether > 0.02 ether</label>
+            <br />
+            Used account: { this.state.accounts }
+           Total : { this.state.accounts }
             <br />
             <input
               value={this.state.value}
